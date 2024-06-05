@@ -24,7 +24,7 @@ pip install poetry
 poetry install
 ```
 
-## Criando um experimento (no Windows executar por Git Bash ou WSL)
+## Criando um experimento (no Windows por Git Bash ou WSL)
 
 Para tornar o script executável (habilitar apenas uma vez é suficiente):
 
