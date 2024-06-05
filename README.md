@@ -38,7 +38,7 @@ Para criar o experimento:
 ./criar_experimento.sh
 ```
 
-## Como configurar o .env (no Windows executar por Git Bash ou WSL)
+## Como configurar o .env (no Windows por Git Bash ou WSL)
 
 ```bash
 touch .env
