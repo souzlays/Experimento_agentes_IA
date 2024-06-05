@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "experiment-with-ai-agents"
+version = "0.1.0"
+description = "Projeto para experimentar agentes de IA"
+authors = ["Procuradoria-Geral do Estado do Paraná (PGE-PR)"]
+license = "LICENÇA DE USO RESTRITO"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<=3.13"
+crewai = "0.28.8"
+groq = "^0.8.0"
+langchain-groq = "^0.1.5"
+crewai-tools = "0.1.6"
+langchain-community = "0.0.29"
+python-dotenv = "1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
