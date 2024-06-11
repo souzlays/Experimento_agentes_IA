@@ -6,8 +6,8 @@ Dados do experimento:
 - Hora: 15-29-02
 
 Autor(es):
-- ...
-- ...
+- Lays
+
 
 
 ## Sumário executivo
@@ -37,8 +37,17 @@ Configuração experimental:
 - Tarefas: ...
 - Objetivos: ...
 
-...
 
+```mermaid
+graph TD
+  A[Escritor escreve texto] --> B[Revisor lê texto]
+  B --> C{Texto incoerente?}
+  C -->|Sim| A
+  C -->|Não| D[Publicar texto]
+  D --> E[Reformatar para 127 caracteres para Twitter]
+  D --> F[Publicar texto na íntegra para Jornal da Tarde]
+
+```
 
 ## Resultados/Análise
 
