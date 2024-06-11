@@ -24,7 +24,7 @@ def extrair_texto_pdf(file_path: str):
 file_path = "/home/pge/lays/teste_basetools/artigo.pdf"
 texto_paginas = extrair_texto_pdf(file_path)
 texto_paginas_str = "".join(texto_paginas)
-#print(texto_paginas_str)
+
 
 ### AGENTS
 agente_resumidor_por_pagina = Agent(
