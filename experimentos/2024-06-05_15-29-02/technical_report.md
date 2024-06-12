@@ -12,12 +12,12 @@ Autor(es):
 
 ## Sumário executivo
 
-...
+- Protótipo de uma ferramenta de automação de tarefas, permitindo que os agentes utilizem uma funcionalidade em Python para extrair textos de arquivos PDF e resumir brevemente o conteúdo.
 
 
 ## 1. Introdução
 
-...
+- É uma ferramenta desenvolvida com o propósito de explorar o framework CrewAI, oferecendo funcionalidades que se adequam às necessidades do setor.
 
 
 ## 2. Procedimento experimental
@@ -25,27 +25,25 @@ Autor(es):
 ### 2.1. Materiais:
 
 LLMs:
-- ...
-- ...
-
+- llama3-70b-8192
 
 ### 2.2. Métodos
 
 Configuração experimental:
 
-- Agentes: ...
-- Tarefas: ...
-- Objetivos: ...
+- Agentes: agente_resumidor_por_pagina, agente_de_resumo_global, agente_revisor_do_resumo_global.
+- Tarefas: tarefa_resumo_paginas, tarefa_de_aprimoramento_de_resumo, tarefa_de_resumo_global, tarefa_de_revisão_de_resumo_global.
+- Objetivos: Possibilitar que os agentes elaborem resumos claros e concisos dos textos extraídos de arquivos PDF utilizando uma função em Python externa ao framework.
 
+- Fluxo dos agentes:
 
 ```mermaid
-graph TD
-  A[Escritor escreve texto] --> B[Revisor lê texto]
-  B --> C{Texto incoerente?}
-  C -->|Sim| A
-  C -->|Não| D[Publicar texto]
-  D --> E[Reformatar para 127 caracteres para Twitter]
-  D --> F[Publicar texto na íntegra para Jornal da Tarde]
+flowchart TD
+    A[Agente Resumidor] -->|Recebe texto extraído das páginas do arquivo| B[Escreve resumos de cada página]
+    B --> C[Task de aprimoramento de resumo das páginas]
+    C -->|Dá saída com resumos aprimorados| D[Agente Resumidor Global]
+    D -->|Faz resumo das páginas| E[Agente Revisor de Resumo]
+    E -->|Revisa resumo global e passa saída com texto aprimorado| F[Texto Aprimorado]
 
 ```
 
@@ -56,9 +54,10 @@ graph TD
 
 ## Conclusão
 
-...
+O framework atendeu a grande parte das necessidades, mas ainda precisa de melhorias.
 
 
 ## Referências
 
-...
+- [Site oficial - Crewai](https://www.crewai.com/)
+- [Curso com o criador do Crewai - Multi AI Agent Systems with crewAI](https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/)

@@ -39,7 +39,7 @@ agente_resumidor_por_pagina = Agent(
             "examinar cuidadosamente o texto de cada página dos arquivos PDF."
             "e gerar resumos claros e informativos."
             "facilite a compreensão e a revisão dos documentos.",
-    allow_delegation=True,
+    allow_delegation=False,
     verbose=False,
     
 )
