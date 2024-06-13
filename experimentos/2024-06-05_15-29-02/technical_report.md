@@ -40,14 +40,15 @@ Configuração experimental:
 ```mermaid
 flowchart TD
     A[Agente Resumidor] -->|Recebe texto extraído das páginas do arquivo| B[Escreve resumos de cada página]
-    B --> C[Task de aprimoramento de resumo das páginas]
-    C -->|Dá saída com resumos aprimorados| D[Agente Resumidor Global]
-    D -->|Faz resumo das páginas| E[Agente Revisor de Resumo]
-    E -->|Revisa resumo global e passa saída com texto aprimorado| F[Texto Aprimorado]
+    B --> C[Agente Resumidor Global]
+    C -->|Faz resumo global das páginas| D[Agente Revisor de Resumo]
+    D -->|Revisa resumo global e passa saída com texto aprimorado| E[Texto Aprimorado]
 
 ```
 
 ## Resultados/Análise
+
+- Foi necessário adaptar o código, reduzindo a quantidade de tokens, para que o kickoff fosse executado sem erros.
 
 ```
 [DEBUG]: == Working Agent: Resumir textos
