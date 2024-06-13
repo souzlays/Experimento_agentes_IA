@@ -30,47 +30,28 @@ texto_paginas_str = "".join(texto_paginas)
 agente_resumidor_por_pagina = Agent(
     llm=llm,
     role="Resumir textos",
-    goal="Gerar resumos precisos e concisos de cada página do arquivo PDF."
-    "Utilizar o texto extraído das páginas do arquivo PDF para fazer um breve resumo de cada página."
-    "Resumir cada página do arquivo PDF de forma clara e concisa."
-    "Não exibir o conteúdo completo da página, mas sim destacar os pontos-chave e as informações essenciais."
-    "Gerar texto em português BR.",
-    backstory="Como um agente resumidor de páginas, sua missão é "
-            "examinar cuidadosamente o texto de cada página dos arquivos PDF."
-            "e gerar resumos claros e informativos."
-            "facilite a compreensão e a revisão dos documentos.",
+    goal="Gerar resumos precisos e concisos de cada página do arquivo PDF.",
+    backstory="Como agente resumidor de páginas, gerar resumos claros e informativos para facilitar a compreensão e revisão dos documentos."
+    "Gerar um resumo por página do arquivo PDF",
     allow_delegation=False,
     verbose=False,
-    
 )
 
 agente_de_resumo_global = Agent(
     llm=llm,
     role="Resumidor Global",
-    goal="Gerar um resumo global conciso e preciso a partir dos resumos das páginas de arquivos PDF. Gerar texto em português BR."
-    "Não exibir o conteúdo completo da página, mas sim destacar os pontos-chave e as informações essenciais.",
-    backstory="Como um agente de resumo global, sua missão é"
-            "compilar os resumos individuais de cada página dos arquivos PDF "
-            "e sintetizá-los em um único resumo global que captura a essência "
-            "de todo o documento." 
-            "assegura que o resumo global seja coerente"
-            "informativo e útil para a compreensão rápida do conteúdo do PDF.",
+    goal="Gerar um resumo global conciso e preciso a partir dos resumos das páginas de arquivos PDF.",
+    backstory="Como agente de resumo global, compilar resumos individuais das páginas em um único resumo que capture a essência do documento.",
     allow_delegation=False,
     verbose=True,
-    
 )
+
 
 agente_revisor_do_resumo_global = Agent(
     llm=llm,    
     role="Revisor de Resumos",
-    goal="Garantir que os resumos globais atendam aos critérios de qualidade especificados."
-    "Não exibir o conteúdo do arquivo, exibir apenas a revisão"
-    "Gerar texto em português BR.",
-    backstory="Como um agente revisor de resumos, sua missão é "
-            "examinar os resumos globais gerados para que atendam aos padrões "
-            "de qualidade especificados. Utilizando sua atenção aos detalhes e conhecimentos "
-            "em revisão, você assegura que os resumos sejam coerentes, precisos e informativos, "
-            "facilitando a compreensão dos documentos resumidos.",
+    goal="Garantir que os resumos globais atendam aos critérios de qualidade especificados.",
+    backstory="Como agente revisor de resumos, assegurar que os resumos sejam coerentes, precisos e informativos para facilitar a compreensão dos documentos resumidos.",
     allow_delegation=False,
     verbose=True
 )
@@ -78,76 +59,48 @@ agente_revisor_do_resumo_global = Agent(
 ## Tarefas
 tarefa_resumo_paginas = Task(
     description=(
-        "Resuma o texto: {texto_paginas}"
-        "Utilize técnicas de resumo de texto para gerar "
-        "resumos concisos, porém informativos. "
-        "Certifique-se de capturar com precisão os pontos-chave, "
-        "ideias principais e detalhes importantes. "
-        "Os resumos devem ser claros, coerentes "
-        "e fácil de entender para as partes interessadas "
-        "que podem não ter tempo para ler as páginas inteiras."
+        "Resumir o texto: {texto_paginas}"
+        "Gerar um resumo de cada página do arquivo PDF"
+        "Utilizar técnicas para gerar resumos concisos, porém informativos. "
+        "Capturar com precisão pontos-chave, ideias principais e detalhes importantes. "
+        "Os resumos devem ser claros, coerentes e fáceis de entender."
     ),
-    expected_output="Um resumo bem elaborado das páginas"
-        "destacando os principais pontos, "
-        "descobertas-chave e informações essenciais. "
-        "Os resumos devem fornecer uma visão geral abrangente "
-        "ao mesmo tempo que serão sucintos e de fácil compreensão.",
+    expected_output="Resumo bem elaborado de cada página, destacando pontos principais, descobertas-chave e informações essenciais.",
     agent=agente_resumidor_por_pagina,
-    
 )
 
-tarefa_de_aprimoramento_de_resumo = Task(
-    description=(
-        "Aprimore os resumos existentes das páginas"
-        "Analise os resumos atuais e os documentos originais"
-        "para identificar áreas que podem ser expandidas, clarificadas ou melhoradas. "
-        "Adicione detalhes relevantes que possam ter sido omitidos nos resumos iniciais. "
-        "Garanta que os resumos aprimorados mantenha sua concisão e clareza, "
-        "mas forneça uma cobertura mais abrangente das informações essenciais."
-    ),
-    expected_output="resumo aprimorado das páginas do documento "
-        "que incorpora as melhorias identificadas. "
-        "Os resumos aprimorados devem ser mais abrangentes e informativos do que o original, "
-        "incluindo detalhes adicionais relevantes para uma compreensão completa do conteúdo.",
-    agent=agente_resumidor_por_pagina,
-)
+# tarefa_de_aprimoramento_de_resumo = Task(
+#     description=(
+#         "Aprimorar resumos de cada página do arquivo. "
+#         "Analisar e identificar áreas que podem ser expandidas, clarificadas ou melhoradas. "
+#         "Adicionar detalhes relevantes para uma cobertura mais abrangente das informações."
+#     ),
+#     expected_output="Resumo aprimorado que incorpora melhorias identificadas, mais abrangente e informativo.",
+#     agent=agente_resumidor_por_pagina,
+# )
+
 
 tarefa_de_resumo_global = Task(
     description=(
-        "Gerar um resumo geral a partir dos resumos do {texto_paginas}"
-        "que contenha uma síntese abrangente e concisa do conteúdo. "
-        "O resumo deve capturar os pontos-chave de todas as seções "
-        "e páginas do documento, destacando as informações mais relevantes. "
-        "Certifique-se de manter a coesão e a fluidez no resumo, "
-        "mantendo uma estrutura lógica e organizada. "
-        "O resumo deve ser claro e compreensível para os leitores, "
-        "refletindo com precisão o conteúdo original do arquivo PDF."
+        "Gerar um resumo global a partir dos resumos de cada página do {texto_paginas}. "
+        "Síntese abrangente e concisa, capturando pontos-chave de todas as seções e páginas."
     ),
     expected_output=(
-        "Um resumo global do arquivo PDF, "
-        "que condensa de forma eficaz as informações mais importantes "
-        "de todas as seções e páginas. O resumo deve ser conciso, "
-        "coeso e refletir com precisão o conteúdo original. "
-        "Deve oferecer uma visão geral compreensível do documento "
-        "e destacar os pontos-chave para os leitores."
+        "Resumo global que condensa informações importantes de todas as seções e páginas do documento, "
+        "coeso, claro e refletindo com precisão o conteúdo original."
     ),
     agent=agente_de_resumo_global,
 )
 
+
 tarefa_de_revisão_de_resumo_global = Task(
-    description="O resumo precisa ter um título"
-                "O resumo precisa ter uma introdução"
-                "O resumo precisa ter uma conclusão"
-                "O resumo precisa ter uma seção de referências",
-    expected_output="Um resumo global revisado dos textos extraídos das páginas do arquivo PDF que incorpora"
-        "todas as melhorias especificadas. O resumo deve incluir: "
-        "Um título claro e descritivo que resuma o conteúdo do documento. "
-        "Uma introdução que contextualize o leitor sobre o assunto abordado. "
-        "Uma conclusão que recapitule os pontos-chave e forneça insights finais. "
-        "Uma seção de referências que liste todas as fontes utilizadas no resumo, "
-        "se necessário. "
-        "O resumo revisado deve ser coeso, claro e atender aos requisitos "
-        "estabelecidos para garantir sua eficácia na comunicação do conteúdo.",
+    description=(
+        "Revisar resumo global para incluir título, introdução, conclusão e seção de referências."
+    ),
+    expected_output=(
+        "Resumo revisado que incorpora todas as melhorias especificadas, "
+        "com título claro, introdução contextualizada, conclusão com insights finais e seção de referências."
+    ),
     agent=agente_revisor_do_resumo_global,
 )
 
@@ -155,7 +108,7 @@ tarefa_de_revisão_de_resumo_global = Task(
 ### EQUIPE 
 crew = Crew(
     agents=[agente_resumidor_por_pagina, agente_de_resumo_global, agente_revisor_do_resumo_global],
-    tasks=[tarefa_resumo_paginas, tarefa_de_aprimoramento_de_resumo, tarefa_de_resumo_global, tarefa_de_revisão_de_resumo_global],
+    tasks=[tarefa_resumo_paginas, tarefa_de_resumo_global, tarefa_de_revisão_de_resumo_global],
     verbose=1
 )
 
